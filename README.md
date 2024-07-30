@@ -6,4 +6,5 @@
 https://apps.microsoft.com/detail/9pjpw5ldxlz5?hl=en-US&gl=US
 
 Instalar Driver en la terminal de VScode
-Pip install Pillow
+
+ Pip install Pillow
