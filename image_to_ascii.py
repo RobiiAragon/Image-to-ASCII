@@ -21,9 +21,14 @@ RAMPS = {
 CHAR_ASPECT = 0.5  # terminal characters are about twice as tall as they are wide
 
 
-def load(path: Path, width: int) -> Image.Image:
-    img = Image.open(path)
-    img = ImageOps.exif_transpose(img).convert("RGB")
+def load(path: Path, width: int, background: tuple[int, int, int] = (0, 0, 0)) -> Image.Image:
+    img = ImageOps.exif_transpose(Image.open(path))
+    # Flatten transparency onto the background, otherwise the hidden RGB values
+    # under transparent pixels (often white) show up as solid characters.
+    if img.mode in ("RGBA", "LA", "PA") or "transparency" in img.info:
+        img = img.convert("RGBA")
+        img = Image.alpha_composite(Image.new("RGBA", img.size, (*background, 255)), img)
+    img = img.convert("RGB")
     height = max(1, round(img.height / img.width * width * CHAR_ASPECT))
     return img.resize((width, height), Image.Resampling.LANCZOS)
 
@@ -62,7 +67,7 @@ def main(argv: list[str] | None = None) -> int:
 
     path = args.image or Path(input("Image path: ").strip().strip('"'))
     try:
-        img = load(path, max(10, args.width))
+        img = load(path, max(10, args.width), (255, 255, 255) if args.invert else (0, 0, 0))
     except (OSError, ValueError) as e:
         print(f"error: can't open {path}: {e}", file=sys.stderr)
         return 1
