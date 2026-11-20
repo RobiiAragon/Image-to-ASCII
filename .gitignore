@@ -3,3 +3,4 @@ __pycache__/
 .venv/
 ascii_image.txt
 *.html
+.pytest_cache/

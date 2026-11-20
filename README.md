@@ -4,7 +4,7 @@
 
 **Turn any image into ASCII art — in your terminal, a .txt file or a colored .html page.**
 
-![Python 3.9+](https://img.shields.io/badge/Python%203.9+-3776AB?style=flat-square&logo=python&logoColor=white) ![Pillow](https://img.shields.io/badge/Pillow-8CA1AF?style=flat-square) ![License GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue?style=flat-square)
+[![CI](https://github.com/RobiiAragon/Image-to-ASCII/actions/workflows/ci.yml/badge.svg)](https://github.com/RobiiAragon/Image-to-ASCII/actions/workflows/ci.yml) ![Python 3.9+](https://img.shields.io/badge/Python%203.9+-3776AB?style=flat-square&logo=python&logoColor=white) ![Pillow](https://img.shields.io/badge/Pillow-8CA1AF?style=flat-square) ![License GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue?style=flat-square)
 
 **English** · [Español](README.es.md)
 
@@ -20,7 +20,7 @@
 - 📐 Correct aspect ratio for terminal characters — no more squashed images.
 - 🔤 Three character sets: `classic`, `detailed` (70 levels) and `blocks` (`█▓▒░`).
 - 🌗 Made for dark terminals by default, with `--invert` for white backgrounds or printing.
-- 🎨 Export to `.html` and keep the original colors of every pixel.
+- 🎨 Print in full color right in the terminal (`--color`, 24-bit) or export to `.html` and keep the original colors of every pixel.
 
 ## Install
 
@@ -35,6 +35,7 @@ python -m pip install -r requirements.txt
 ```sh
 python image_to_ascii.py photo.jpg                    # print to the terminal
 python image_to_ascii.py photo.jpg -w 160 -r detailed # wider, more detail
+python image_to_ascii.py photo.jpg -c                 # full color in the terminal
 python image_to_ascii.py photo.jpg -o art.txt         # save as text
 python image_to_ascii.py photo.jpg -o art.html -q     # colored HTML, no terminal output
 python image_to_ascii.py                              # asks for the path
@@ -46,7 +47,15 @@ python image_to_ascii.py                              # asks for the path
 | `-r`, `--ramp` | `classic`, `detailed` or `blocks` |
 | `-i`, `--invert` | Invert brightness for white backgrounds |
 | `-o`, `--output` | Save to `.txt`, or `.html` to keep colors |
+| `-c`, `--color` | Print in 24-bit color (truecolor terminals) |
 | `-q`, `--quiet` | Don't print to the terminal |
+
+## Tests
+
+```sh
+python -m pip install pytest
+python -m pytest -q
+```
 
 ## License
 
